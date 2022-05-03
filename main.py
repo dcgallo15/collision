@@ -15,6 +15,7 @@ def main():
     e = gui.getRestituition()
     A = Square(colour.red, 30, 30, 100, 100, gui.getA()[0], gui.getA()[1])
     B = Square(colour.blue, 30, 30, 200, 100, gui.getB()[0], gui.getB()[1])
+    amountOfCollisions = 0
 
     width = 320
     height = 240
@@ -25,12 +26,23 @@ def main():
         tic = time.perf_counter()
         for event in pygame.event.get():  # event handler
             if event.type == pygame.QUIT:
-                exit(240)
+                gameRunning = False
 
         # moves the squares
         if A.collidesWithWalls(width) == False:
             A.translate(A.velocity * (time.perf_counter() - tic) * 1000, 0)
+            amountOfCollisions += 1
+        else:
+            A.velocity = (A.velocity * -1) * 0.5
+            print("New A:", A.velocity)
+            A.translate(A.velocity * (time.perf_counter() - tic) * 1000, 0)
         if B.collidesWithWalls(width) == False:
+            B.translate(B.velocity * (time.perf_counter() - tic) * 1000, 0)
+            amountOfCollisions += 1
+        else:
+            # NOTE: assume e between square and wall is 0.5
+            B.velocity = (B.velocity * -1) * 0.5
+            print("New B:", B.velocity)
             B.translate(B.velocity * (time.perf_counter() - tic) * 1000, 0)
 
         if A.collidesWithSquare(B) == True:
@@ -40,6 +52,10 @@ def main():
             B.velocity = (e*(tmp - B.velocity)) + A.velocity
             print("New A:", A.velocity)
             print("New B:", B.velocity)
+            if A.velocity == B.velocity or A.velocity == -0 or B.velocity == -0:
+                print("A and B are stuck together")
+                exit(240)
+            amountOfCollisions += 1
 
         screen.fill(colour.black)
         # Render Calls
@@ -48,6 +64,7 @@ def main():
         pygame.draw.rect(screen, B.colour, pygame.Rect(
             B.x, B.y, B.width, B.height))
         pygame.display.flip()
+    print("There were: ", amountOfCollisions, "collisions")
 
 
 if __name__ == "__main__":

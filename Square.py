@@ -20,7 +20,7 @@ class Square():
         return False
 
     def collidesWithSquare(self, square):
-        if self.x > (square.x-square.width):
+        if (square.x - (square.width) / 2) < (self.x + (self.width / 2)) and (square.x + (square.width) / 2) > self.x:
             return True
         return False
 
