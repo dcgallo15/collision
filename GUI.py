@@ -6,12 +6,13 @@ class Gui():
         self.__root = root
         self.__start = False
         self.renderStartButton()
-        self.renderResetButton()
+        # self.renderResetButton()
         self.renderRestitutionEntry()
         self.renderVelAEntry()
         self.renderVelBEntry()
         self.renderMassAEntry()
         self.renderMassBEntry()
+        self.renderResWall()
         root.mainloop()
 
     def onStartButton(self):
@@ -22,6 +23,7 @@ class Gui():
         self.__B = (int(self.__velBEntry.get()),
                     int(self.__massBEntry.get()))
         self.__e = float(self.__restitutionEntry.get())
+        self.__we = float(self.__WeEntry.get())
         self.__root.destroy()
 
     def renderStartButton(self):
@@ -35,7 +37,7 @@ class Gui():
     def renderResetButton(self):
         resetButton = Button(self.__root, text="RESET",
                              bg="red", command=lambda: self.onResetButton())
-        resetButton.grid(row=2, column=0)
+        resetButton.grid(row=2, column=0)  # TODO: change pos
 
     def renderRestitutionEntry(self):
         self.__restitutionEntry = Entry(self.__root)
@@ -62,6 +64,11 @@ class Gui():
         self.__massBEntry.insert(-1, "Mb")
         self.__massBEntry.grid(row=2, column=2)
 
+    def renderResWall(self):
+        self.__WeEntry = Entry(self.__root)
+        self.__WeEntry.insert(-1, "e with wall")
+        self.__WeEntry.grid(row=2, column=0)
+
     def getStart(self):
         return self.__start
 
@@ -73,3 +80,6 @@ class Gui():
 
     def getRestituition(self):
         return self.__e
+
+    def getResWall(self):
+        return self.__we
