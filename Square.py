@@ -1,3 +1,7 @@
+from pygame import Vector2
+from math import atan, degrees, tan, radians
+
+
 class Square():
     def __init__(self, colour, width, height, x, y, velocity, mass):
         self.colour = colour
@@ -20,9 +24,28 @@ class Square():
         return False
 
     def collidesWithSquare(self, square):
-        if (square.x - (square.width) / 2) < (self.x + (self.width / 2)) and (square.x + (square.width) / 2) > self.x:
+        if (square.x - (square.width)) < (self.x + (self.width)) and (square.x + (square.width)) > self.x:
             return True
         return False
+
+
+class SquarePlus(Square):
+    def __init__(self, colour, width, height, x, y, velocity, mass, energy):
+        super().__init__(colour, width, height, x, y, velocity, mass)
+        self.__energy = energy
+
+
+class Line():  # 2 Vector2 (start and end), width
+    def __init__(self, angle, width, height):
+        self.__angle = angle
+        self.__width = width
+        self.__height = height
+
+    def getStartPos(self):
+        return Vector2(0, self.__height)
+
+    def getEndPos(self):
+        return Vector2(self.__width, (self.__width * tan(self.__angle)) - self.__height)
 
 
 class Colour():

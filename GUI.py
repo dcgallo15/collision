@@ -4,24 +4,25 @@ from tkinter import *
 class Gui():
     def __init__(self, root):
         self.__root = root
+        self.__root.title("Collision")
         self.__start = False
         self.renderStartButton()
         # self.renderResetButton()
         self.renderRestitutionEntry()
         self.renderVelAEntry()
         self.renderVelBEntry()
-        self.renderMassAEntry()
-        self.renderMassBEntry()
         self.renderResWall()
+        self.renderMassAEntry()  # TODO: implement mass
+        self.renderMassBEntry()
         root.mainloop()
 
     def onStartButton(self):
         self.__start = True
         # (vel, mass)
-        self.__A = (int(self.__velAEntry.get()),
-                    int(self.__massAEntry.get()))
-        self.__B = (int(self.__velBEntry.get()),
-                    int(self.__massBEntry.get()))
+        self.__A = (float(self.__velAEntry.get()),
+                    float(self.__massAEntry.get()))
+        self.__B = (float(self.__velBEntry.get()),
+                    float(self.__massBEntry.get()))
         self.__e = float(self.__restitutionEntry.get())
         self.__we = float(self.__WeEntry.get())
         self.__root.destroy()
@@ -56,12 +57,12 @@ class Gui():
 
     def renderMassAEntry(self):
         self.__massAEntry = Entry(self.__root)
-        self.__massAEntry.insert(-1, "Ma")
+        self.__massAEntry.insert(-1, "1")
         self.__massAEntry.grid(row=2, column=1)
 
     def renderMassBEntry(self):
         self.__massBEntry = Entry(self.__root)
-        self.__massBEntry.insert(-1, "Mb")
+        self.__massBEntry.insert(-1, "1")
         self.__massBEntry.grid(row=2, column=2)
 
     def renderResWall(self):

@@ -1,3 +1,5 @@
+# NOTE: THIS IS A TESTING PROGRAM FOR THE COLLISIONS
+
 import time
 import pygame
 from Square import Square, Colour
